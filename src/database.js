@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/database",{
+const URL = "mongodb://localhost/database";
+mongoose.connect(URL,{
   useNewUrlParser : true,
   useUnifiedTopology: true,
   useNewUrlParser: true
 })
     .then(db => console.log("conectado a la base de datos"))
     .catch(err => console.log(err));
+
+    module.exports =  mongoose;
