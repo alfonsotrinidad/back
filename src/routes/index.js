@@ -21,13 +21,13 @@ router.post('/signup',  async(req , res ) =>{
 });
 
 
-router.post('/products/guaradar',  async(req , res ) =>{ 
-    const {nombre,caracteristica,email,pais,vendidas,disponibles } = req.body;
-   
-    const newProduct = new products({ nombre, caracteristica,email,pais ,precio,disponibles,
-                                      vendidas});
+router.post('/products/guardar',  async(req , res ) =>{ 
+   const {nombre,caracteristica,email,precio,pais,disponibles,vendidas } = req.body;
+   const newProduct = new products({ nombre, caracteristica,email,precio,pais,disponibles,vendidas});
     await newProduct.save();
+    res.send("Producto guardado;:   "+newProduct);
     res.send(newProduct);
+   
    
 });
 
