@@ -1,5 +1,6 @@
 const products = require("../models/products");
 const{ Router } = require('express');
+const users = require("../models/users");
 
 const router = Router();
 
@@ -11,7 +12,10 @@ router.get('/products', async (req , res ) => {
         res.json(p);
 });
         
-
+router.get('/users', async (req , res ) => {
+    const u= await users.find();
+    res.json(u);
+});
 router.post('/signup',  async(req , res ) =>{ 
     const {email ,password } = req.body;
     const newUser = new products({ email, password  });
