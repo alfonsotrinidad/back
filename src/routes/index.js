@@ -35,5 +35,8 @@ router.post('/products/guardar',  async(req , res ) =>{
    
 });
 
+// paises
 
+
+//return  console.log( ));
 module.exports = router;

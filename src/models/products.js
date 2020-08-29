@@ -5,7 +5,7 @@ const { Schema , model} = require ('mongoose');
 const productSchema = new Schema({
 
   nombre:String,
-  caracteristicas: String,
+  caracteristica: String,
   email: String,
   precio: Number,
   pais :String, 
