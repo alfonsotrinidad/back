@@ -4,7 +4,8 @@ const users = require("../models/users");
 
 const router = Router();
 
-router.get('/', (req , res ) => res.send("Bienvenidos  de nuevo"));
+router.get('/', (req , res ) =>
+ res.send("<h1>Bienvenidos  de nuevo</h1"));
 
 
 router.get('/products', async (req , res ) => {
