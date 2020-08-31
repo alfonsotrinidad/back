@@ -26,12 +26,17 @@ router.post('/signup',  async(req , res ) =>{
 });
 
 
+router.delete('/products/delete/:id',  async(req , res ) =>{ 
+    const {id } = req.params ;
+    await products.remove({_id: id});
+    
+});
+
 router.post('/products/guardar',  async(req , res ) =>{ 
    const {nombre,caracteristica,email,precio,pais,disponibles,vendidas } = req.body;
    const newProduct = new products({ nombre, caracteristica,email,precio,pais,disponibles,vendidas});
     await newProduct.save();
     res.send("Producto guardado;:   "+newProduct);
-    res.send(newProduct);
    
    
 });
