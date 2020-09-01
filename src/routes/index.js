@@ -18,6 +18,19 @@ router.get('/users', async (req , res ) => {
     const u= await users.find();
     res.json(u);
 });
+
+//signin
+router.get('/signin', async (req , res ) => {
+    const {user,password} = req.body;
+    const u =   users.find({user:user })
+     .then
+          res.json(u);
+ 
+     
+});
+   
+
+
 router.post('/signup',  async(req , res ) =>{ 
     const {email ,password } = req.body;
     const newUser = new products({ email, password  });
