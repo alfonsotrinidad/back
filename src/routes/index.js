@@ -1,7 +1,7 @@
 const products = require("../models/products");
 const{ Router } = require('express');
 const users = require("../models/users");
-
+const jwt = require('jsonwebtoken');
 const router = Router();
 
 router.get('/', (req , res ) =>{
@@ -20,23 +20,25 @@ router.get('/users', async (req , res ) => {
 });
 
 //signin
-router.get('/signin', async (req , res ) => {
+router.post('/signin', async (req , res ) => {
     const {user,password} = req.body;
-    const u =   users.find({user:user })
-     .then
-          res.json(u);
- 
-     
+   const u = await users.findOne({user: user});
+  // return res.json(u);
+   if(!u) return res.send("No encontrado")
+   if (u.password  !== password ) return  res.send("Algo va mal")
+    const token= jwt.sign({_id: u._id},'clave'); return res.json({token}) 
+   
 });
    
 
-
+// registrar usuario
 router.post('/signup',  async(req , res ) =>{ 
-    const {email ,password } = req.body;
-    const newUser = new products({ email, password  });
+    const {user ,password } = req.body;
+    const newUser = new users({ user, password  });
     await newUser.save();
-    res.send(req.body);
-   
+   const token =  jwt.sign({_id:newUser._id },'clave');
+    res.json({token});
+    //console.log(newUser.password);
 });
 
 
