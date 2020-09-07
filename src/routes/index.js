@@ -26,7 +26,13 @@ router.post('/signin', async (req , res ) => {
   // return res.json(u);
    if(!u) return res.send("No encontrado")
    if (u.password  !== password ) return  res.send("Algo va mal")
-    const token= jwt.sign({_id: u._id},'clave'); return res.json({token}) 
+    const token= jwt.sign(
+        {           _id: u._id,
+        //    user: u.user
+         }
+            ,'clave');
+    console.log(({token}) );
+    return res.json({token}) 
    
 });
    
