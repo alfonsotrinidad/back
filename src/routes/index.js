@@ -3,9 +3,11 @@ const{ Router } = require('express');
 const users = require("../models/users");
 const jwt = require('jsonwebtoken');
 const router = Router();
+ const config = require('../config');
+
 
 router.get('/', (req , res ) =>{
- res.send("<h1>Bienvenidos  de nuevo</h1");
+ res.send("<h1>Bienvenidos  de nuevo</h1>");
 });
 
 
@@ -30,7 +32,7 @@ router.post('/signin', async (req , res ) => {
         {           _id: u._id,
         //    user: u.user
          }
-            ,'clave');
+            ,config.secret);
     console.log(({token}) );
     return res.json({token}) 
    
@@ -41,9 +43,16 @@ router.post('/signin', async (req , res ) => {
 router.post('/signup',  async(req , res ) =>{ 
     const {user ,password } = req.body;
     const newUser = new users({ user, password  });
+  //  newUser.password = await newUser.encrypt(newUser.password);
+   // console.log(newUser);
     await newUser.save();
-   const token =  jwt.sign({_id:newUser._id },'clave');
-    res.json({token});
+    
+   const token =  jwt.sign({_id:newUser._id },config.secret);
+    res.json({
+        user:newUser.user,
+        auth:true,
+        message:"Saved",
+        token});
     //console.log(newUser.password);
 });
 
