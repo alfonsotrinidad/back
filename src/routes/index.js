@@ -11,7 +11,7 @@ router.get('/', (req , res ) =>{
 });
 
 
-router.get('/products', async (req , res ) => {
+router.get('/products', verificarToken, async (req , res ) => {
         const p = await products.find();
         res.json(p);
 });
@@ -30,11 +30,14 @@ router.post('/signin', async (req , res ) => {
    if (u.password  !== password ) return  res.send("Algo va mal")
     const token= jwt.sign(
         {           _id: u._id,
-        //    user: u.user
+            user: u.user
          }
             ,config.secret);
     console.log(({token}) );
-    return res.json({token}) 
+    return res.json({
+        token,
+        user:u.user
+    }) 
    
 });
    
@@ -103,6 +106,12 @@ router.put('/products/update', function (req, res) {
 
 //return  console.log( ));
 module.exports = router;
+
+function verificarToken(req, res, next){
+    if (!req.headers.autorization) return res.send('Debes loguearte');
+    const token = req.headers.autorization.split(' ')[0]
+    console.log(token)
+}
 
 
 
